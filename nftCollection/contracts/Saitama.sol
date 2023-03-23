@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IWhitelist.sol";
 
-contract CryptoDevs is ERC721Enumerable, Ownable {
+contract Saitama is ERC721Enumerable, Ownable {
     /**
     * @dev _baseTokenURI for computing {tokenURI}. If set, the resulting URI for each
     * token will be the concatenation of the `baseURI` and the `tokenId`.
@@ -19,13 +19,13 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     bool public _paused;
 
     // max number of CryptoDevs
-    uint256 public maxTokenIds = 20;
+    uint256 public maxTokenIds = 6969;
 
     // total number of tokenIds minted
     uint256 public tokenIds;
 
     // Whitelist contract instance
-    IWhitelist whitelist;
+    // IWhitelist whitelist;
 
     // boolean to keep track of when presale started
     bool public presaleStarted;
@@ -44,9 +44,9 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     * Constructor for Crypto Devs takes in the baseURI to set _baseTokenURI for the collection.
     * It also initializes an instance of whitelist interface.
     */
-    constructor (string memory baseURI, address whitelistContract) ERC721("Crypto Devs", "CD") {
+    constructor (string memory baseURI) ERC721("Saitama", "SAI") {
         _baseTokenURI = baseURI;
-        whitelist = IWhitelist(whitelistContract);
+        // whitelist = IWhitelist(whitelistContract);
     }
 
     /**
@@ -64,7 +64,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     */
     function presaleMint() public payable onlyWhenNotPaused {
         require(presaleStarted && block.timestamp < presaleEnded, "Presale is not running");
-        require(whitelist.whitelistedAddresses(msg.sender), "You are not whitelisted");
+        // require(whitelist.whitelistedAddresses(msg.sender), "You are not whitelisted");
         require(tokenIds < maxTokenIds, "Exceeded maximum Cypto Devs supply");
         require(msg.value >= _price, "Ether sent is not correct");
         tokenIds += 1;
